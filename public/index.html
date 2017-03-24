@@ -6,66 +6,39 @@
 </head>
 <body data-ng-controller="Controller as vm">
 
-
-  <!-- <div style="width: 300px;" data-ng-init="vm.Dados()">
-    <canvas id="pie" class="chart chart-pie" chart-data="vm.data" chart-labels="vm.label"></canvas>
-  </div> -->
-
   <div data-ng-init="vm.Dados()" id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-
-
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
   <script src="https://code.highcharts.com/highcharts.src.js"></script>
-
-  <!-- <script src="bower_components/chart.js/dist/Chart.min.js"></script>
-  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script> -->
   <script>
     'use strict'
     angular.module('app', [])
     .controller('Controller', function($http) {
+
       var vm = this
+      
       vm.data = []
 
-      
-
-
       vm.Dados = function() {
-        $http({
-          method: 'GET',
-          url: 'http://localhost:8888/dados'
-        })
-        .then(function(ret) {
-          var arr = ret.data
+        
+        // $http({
+        //   method: 'GET',
+        //   url: 'http://localhost:8888/dados'
+        // })
+        // .then(function(ret) {
+        //   var arr = ret.data
+        //   arr.forEach(function(a,b,c) {
+        //     vm.data[b] = {name:a.uf, y:parseFloat(a.total)}
+        //   })
+        // })
+
+          var arr = [{"ano":"2017","uf":"SP","total":"4338236.960000"},{"ano":"2017","uf":"MG","total":"79965.170000"},{"ano":"2017","uf":"RJ","total":"35556.470000"},{"ano":"2017","uf":"PI","total":"34391.540000"},{"ano":"2017","uf":"RS","total":"27799.440000"},{"ano":"2017","uf":"TO","total":"22813.780000"},{"ano":"2017","uf":"PR","total":"22669.910000"},{"ano":"2017","uf":"BA","total":"22010.810000"},{"ano":"2017","uf":"PB","total":"20812.370000"},{"ano":"2017","uf":"MT","total":"18513.230000"},{"ano":"2017","uf":"GO","total":"18171.200000"},{"ano":"2017","uf":"PE","total":"16781.820000"},{"ano":"2017","uf":"SC","total":"13182.810000"},{"ano":"2017","uf":"ES","total":"11026.410000"},{"ano":"2017","uf":"MS","total":"10795.680000"},{"ano":"2017","uf":"MA","total":"10030.800000"},{"ano":"2017","uf":"RN","total":"9841.970000"},{"ano":"2017","uf":"PA","total":"6092.990000"},{"ano":"2017","uf":"CE","total":"5290.910000"},{"ano":"2017","uf":"DF","total":"4690.890000"},{"ano":"2017","uf":"SE","total":"3673.630000"},{"ano":"2017","uf":"AL","total":"3127.600000"},{"ano":"2017","uf":"RO","total":"2800.000000"},{"ano":"2017","uf":"AM","total":"2130.000000"},{"ano":"2017","uf":"AC","total":"1192.140000"},{"ano":"2017","uf":"RR","total":"527.000000"}]
+
+
           arr.forEach(function(a,b,c) {
             vm.data[b] = {name:a.uf, y:parseFloat(a.total)}
           })
 
-          
-          vm.data2=[{
-                      name: 'Microsoft Internet Explorer',
-                      y: 56.33
-                  }, {
-                      name: 'Chrome',
-                      y: 24.03,
-                      sliced: true,
-                      selected: true
-                  }, {
-                      name: 'Firefox',
-                      y: 10.38
-                  }, {
-                      name: 'Safari',
-                      y: 4.77
-                  }, {
-                      name: 'Opera',
-                      y: 0.91
-                  }, {
-                      name: 'Proprietary or Undetectable',
-                      y: 0.2
-                  }]
-
-                  console.log(vm.data2[0])
-                  console.log(vm.data[0])
 
           Highcharts.chart('container', {
               chart: {
@@ -99,31 +72,7 @@
                   data: vm.data
               }]
           });
-        })
-
-        
       }
-
-/*
-      vm.Dados = function() {
-        vm.label = []
-        vm.data = []
-        $http({
-          method: 'GET',
-          url: 'http://localhost:8888/dados'
-        })
-        .then(function(ret){
-          var arr = ret.data
-
-          arr.forEach(function(a,b,c){
-            vm.label.push(a.uf)
-            vm.data.push(a.total)
-          })
-
-        })
-      }
-*/
-
     })
   </script>
 </body>
