@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang='pt-br' data-ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <title>Angular Charts</title>
+</head>
+<body data-ng-controller="Controller as vm">
+
+
+  <!-- <div style="width: 300px;" data-ng-init="vm.Dados()">
+    <canvas id="pie" class="chart chart-pie" chart-data="vm.data" chart-labels="vm.label"></canvas>
+  </div> -->
+
+  <div data-ng-init="vm.Dados()" id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+  <!-- <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script> -->
+  <script>
+    'use strict'
+    angular.module('app', [])
+    .controller('Controller', function($http) {
+      var vm = this
+      vm.data = []
+
+      
+
+
+      vm.Dados = function() {
+        $http({
+          method: 'GET',
+          url: 'http://localhost:8888/dados'
+        })
+        .then(function(ret) {
+          var arr = ret.data
+          arr.forEach(function(a,b,c) {
+            vm.data[b] = {name:a.uf, y:parseFloat(a.total)}
+          })
+
+          
+          vm.data2=[{
+                      name: 'Microsoft Internet Explorer',
+                      y: 56.33
+                  }, {
+                      name: 'Chrome',
+                      y: 24.03,
+                      sliced: true,
+                      selected: true
+                  }, {
+                      name: 'Firefox',
+                      y: 10.38
+                  }, {
+                      name: 'Safari',
+                      y: 4.77
+                  }, {
+                      name: 'Opera',
+                      y: 0.91
+                  }, {
+                      name: 'Proprietary or Undetectable',
+                      y: 0.2
+                  }]
+
+                  console.log(vm.data2[0])
+                  console.log(vm.data[0])
+
+          Highcharts.chart('container', {
+              chart: {
+                  plotBackgroundColor: null,
+                  plotBorderWidth: null,
+                  plotShadow: false,
+                  type: 'pie'
+              },
+              title: {
+                  text: 'Vendas do Ano de 2017 por Estado'
+              },
+              tooltip: {
+                  pointFormat: '{series.name}: <b>R$ {point.y:.2f}</b>'
+              },
+              plotOptions: {
+                  pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      dataLabels: {
+                          enabled: true,
+                          format: '<b>{point.name}</b>: R$ {point.y:.2f}',
+                          style: {
+                              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                          }
+                      }
+                  }
+              },
+              series: [{
+                  name: 'Estado',
+                  colorByPoint: true,
+                  data: vm.data
+              }]
+          });
+        })
+
+        
+      }
+
+/*
+      vm.Dados = function() {
+        vm.label = []
+        vm.data = []
+        $http({
+          method: 'GET',
+          url: 'http://localhost:8888/dados'
+        })
+        .then(function(ret){
+          var arr = ret.data
+
+          arr.forEach(function(a,b,c){
+            vm.label.push(a.uf)
+            vm.data.push(a.total)
+          })
+
+        })
+      }
+*/
+
+    })
+  </script>
+</body>
+</html>
